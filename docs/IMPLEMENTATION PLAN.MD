@@ -14,19 +14,19 @@ The roadmap is structured across 7 phases. Each phase is independently deployabl
 **Goal:** Working Next.js app deployed to Vercel, database connected, environment configured.
 
 ### Tasks
-- [ ] `npx create-next-app@latest knotly --typescript --tailwind --app --src-dir`
-- [ ] Configure `tsconfig.json` — strict mode on
-- [ ] Configure `eslint` with Next.js ruleset
-- [ ] Set up Tailwind custom theme — Knotly brand palette (blush, gold, slate)
-- [ ] Install and configure Prisma — `prisma init`
-- [ ] Create Neon PostgreSQL project, connect via `DATABASE_URL`
-- [ ] Write initial `schema.prisma` — all models (User, VendorProfile, GalleryPhoto, Inquiry, InquiryResponse, Review, SavedVendor)
-- [ ] Run first migration — `prisma migrate dev --name init`
-- [ ] Build `src/lib/prisma.ts` — singleton Prisma client
-- [ ] Build `cn()` utility — `clsx` + `tailwind-merge`
-- [ ] Set up constants — `categories.ts`, `locations.ts`, `pricing.ts`
-- [ ] Deploy to Vercel — connect GitHub repo, set environment variables
-- [ ] Confirm database connection works in production
+- ✅ `npx create-next-app@latest knotly --typescript --tailwind --app --src-dir`
+- ✅ Configure `tsconfig.json` — strict mode on
+- ✅ Configure `eslint` with Next.js ruleset
+- ✅ Set up Tailwind custom theme — Knotly brand palette (blush, gold, slate)
+- ✅ Install and configure Prisma — `prisma init`
+- ✅ Create Neon PostgreSQL project, connect via `DATABASE_URL`
+- ✅ Write initial `schema.prisma` — all models (User, VendorProfile, GalleryPhoto, Inquiry, InquiryResponse, Review, SavedVendor)
+- ✅ Run first migration — `prisma migrate dev --name init`
+- ✅ Build `src/lib/prisma.ts` — singleton Prisma client
+- ✅ Build `cn()` utility — `clsx` + `tailwind-merge`
+- ✅ Set up constants — `categories.ts`, `locations.ts`, `pricing.ts`
+- ✅ Deploy to Vercel — connect GitHub repo, set environment variables
+- ✅ Confirm database connection works in production
 
 **Exit Criteria:** App loads at Vercel URL. Prisma connects to Neon. No TypeScript errors.
 
@@ -37,17 +37,17 @@ The roadmap is structured across 7 phases. Each phase is independently deployabl
 **Goal:** Working login, registration, and role-based session. All three portals protected.
 
 ### Tasks
-- [ ] Install NextAuth — `next-auth`, `@auth/prisma-adapter`
-- [ ] Build `src/lib/auth.ts` — NextAuth config, credentials provider, JWT callbacks
-- [ ] Extend NextAuth session types — `role`, `vendorProfileId` on `Session`
-- [ ] Build `/api/auth/[...nextauth]/route.ts`
-- [ ] Build `middleware.ts` — protect `/couple/*`, `/vendor/*`, `/admin/*` routes
-- [ ] Build UI components — `LoginForm.tsx`, `RegisterForm.tsx`, `RoleSelector.tsx`
-- [ ] Build pages — `/login`, `/register`, `/register/couple`, `/register/vendor`
-- [ ] Add bcrypt password hashing on registration
-- [ ] Zod validation schemas for auth forms
-- [ ] Build shared `AuthProvider` wrapper in root layout
-- [ ] Test: register as couple → redirected to couple dashboard; register as vendor → vendor dashboard
+- ✅ Install NextAuth — `next-auth`, `@auth/prisma-adapter`
+- ✅ Build `src/lib/auth.ts` — NextAuth config, credentials provider, JWT callbacks
+- ✅ Extend NextAuth session types — `role`, `vendorProfileId` on `Session`
+- ✅ Build `/api/auth/[...nextauth]/route.ts`
+- ✅ Build `middleware.ts` — protect `/couple/*`, `/vendor/*`, `/admin/*` routes
+- ✅ Build UI components — `LoginForm.tsx`, `RegisterForm.tsx`, `RoleSelector.tsx`
+- ✅ Build pages — `/login`, `/register`, `/register/couple`, `/register/vendor`
+- ✅ Add bcrypt password hashing on registration
+- ✅ Zod validation schemas for auth forms
+- ✅ Build shared `AuthProvider` wrapper in root layout
+- ✅ Test: register as couple → redirected to couple dashboard; register as vendor → vendor dashboard
 
 **Exit Criteria:** All three roles can register and log in. Wrong-role access redirects correctly. Sessions persist across refresh.
 
@@ -58,22 +58,22 @@ The roadmap is structured across 7 phases. Each phase is independently deployabl
 **Goal:** Vendors can create and publish their listing. This is the supply side — without it, there's nothing to browse.
 
 ### Tasks
-- [ ] Build vendor dashboard layout — `(vendor)/layout.tsx` with sidebar nav
-- [ ] Build `ListingWizard.tsx` — multi-step shell with progress indicator
-- [ ] Build wizard steps:
+- ✅ Build vendor dashboard layout — `(vendor)/layout.tsx` with sidebar nav
+- ✅ Build `ListingWizard.tsx` — multi-step shell with progress indicator
+- ✅ Build wizard steps:
   - `BasicInfoStep.tsx` — business name, category (dropdown), location, bio
   - `PricingStep.tsx` — price range selection, packages description
   - `GalleryStep.tsx` — photo upload (Cloudinary integration)
   - `ReviewStep.tsx` — preview before publish
-- [ ] Set up Cloudinary — create account, unsigned upload preset, install `next-cloudinary`
-- [ ] Build `GalleryUploader.tsx` — drag-and-drop with preview
-- [ ] Build `/api/vendors/route.ts` — POST create vendor listing (Server Action)
-- [ ] Build `generateSlug()` utility — unique slug from business name
-- [ ] Build `/vendor/listing/page.tsx` — view current listing
-- [ ] Build `/vendor/listing/edit/page.tsx` — edit existing listing
-- [ ] Build `/vendor/settings/page.tsx` — account settings
-- [ ] Zod validation for listing form
-- [ ] `isApproved: false` by default — listings not publicly visible until admin approves
+- ✅ Set up Cloudinary — create account, unsigned upload preset, install `next-cloudinary`
+- ✅ Build `GalleryUploader.tsx` — drag-and-drop with preview
+- ✅ Build `/api/vendors/route.ts` — POST create vendor listing (Server Action)
+- ✅ Build `generateSlug()` utility — unique slug from business name
+- ✅ Build `/vendor/listing/page.tsx` — view current listing
+- ✅ Build `/vendor/listing/edit/page.tsx` — edit existing listing
+- ✅ Build `/vendor/settings/page.tsx` — account settings
+- ✅ Zod validation for listing form
+- ✅ `isApproved: false` by default — listings not publicly visible until admin approves
 
 **Exit Criteria:** Vendor can complete the wizard, upload photos, and publish a listing (pending admin approval).
 
@@ -84,19 +84,19 @@ The roadmap is structured across 7 phases. Each phase is independently deployabl
 **Goal:** Couples can browse, search, and filter vendors. The core product experience.
 
 ### Tasks
-- [ ] Build homepage — `HeroSection`, `CategoryGrid`, `FeaturedVendors`, `HowItWorks`
-- [ ] Build `VendorCard.tsx` — photo, name, category badge, location, price range, star rating
-- [ ] Build `VendorGrid.tsx` — responsive masonry-style grid
-- [ ] Build `VendorFilters.tsx` — category, location, price range filter sidebar
-- [ ] Build `VendorSearchBar.tsx` — debounced search input
-- [ ] Build `/vendors/page.tsx` — full directory with filters (SSR, URL query params)
-- [ ] Build `/vendors/[slug]/page.tsx` — full vendor profile (gallery, bio, pricing, reviews)
-- [ ] Build `VendorGallery.tsx` — photo gallery with lightbox
-- [ ] Build `/api/search/route.ts` — PostgreSQL full-text search
-- [ ] Build `/api/vendors/route.ts` GET — paginated vendor listing with filter params
-- [ ] Build `/categories/[category]/page.tsx` — category-filtered listing page
-- [ ] Seed database — realistic vendor data across all 7 categories via `prisma/seed.ts`
-- [ ] Only `isApproved: true` vendors visible publicly
+- ✅ Build homepage — `HeroSection`, `CategoryGrid`, `FeaturedVendors`, `HowItWorks`
+- ✅ Build `VendorCard.tsx` — photo, name, category badge, location, price range, star rating
+- ✅ Build `VendorGrid.tsx` — responsive masonry-style grid
+- ✅ Build `VendorFilters.tsx` — category, location, price range filter sidebar
+- ✅ Build `VendorSearchBar.tsx` — debounced search input
+- ✅ Build `/vendors/page.tsx` — full directory with filters (SSR, URL query params)
+- ✅ Build `/vendors/[slug]/page.tsx` — full vendor profile (gallery, bio, pricing, reviews)
+- ✅ Build `VendorGallery.tsx` — photo gallery with lightbox
+- ✅ Build `/api/search/route.ts` — PostgreSQL full-text search
+- ✅ Build `/api/vendors/route.ts` GET — paginated vendor listing with filter params
+- ✅ Build `/categories/[category]/page.tsx` — category-filtered listing page
+- ✅ Seed database — realistic vendor data across all 7 categories via `prisma/seed.ts`
+- ✅ Only `isApproved: true` vendors visible publicly
 
 **Exit Criteria:** Homepage, directory, filters, search, and individual profiles all work. Seeded vendors appear correctly across categories.
 
