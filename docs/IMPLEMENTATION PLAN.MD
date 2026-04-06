@@ -107,19 +107,19 @@ The roadmap is structured across 7 phases. Each phase is independently deployabl
 **Goal:** Couples can send booking inquiries to vendors. Vendors can respond. Core transactional flow.
 
 ### Tasks
-- [ ] Build `InquiryForm.tsx` — event date picker, guest count, message textarea
-- [ ] Build couple dashboard layout — `(couple)/layout.tsx`
-- [ ] Build `/couple/dashboard/page.tsx` — overview with recent inquiries
-- [ ] Build `/couple/inquiries/page.tsx` — sent inquiry history with status badges
-- [ ] Build `InquiryCard.tsx` — displays inquiry + vendor response if any
-- [ ] Build `InquiryStatusBadge.tsx` — PENDING / ACCEPTED / DECLINED / CANCELLED
-- [ ] Build `/vendor/inquiries/page.tsx` — inquiry inbox for vendors
-- [ ] Build `InquiryResponseForm.tsx` — vendor accepts/declines with message
-- [ ] Build Server Actions — `submitInquiry`, `respondToInquiry`
-- [ ] Build `/api/inquiries/route.ts` — GET/POST inquiries
-- [ ] Build `/api/inquiries/[id]/route.ts` — GET, PUT (status update)
-- [ ] Zod validation for inquiry form
-- [ ] Auth guard — only authenticated couples can submit inquiries
+- ✅ Build `InquiryForm.tsx` — event date picker, guest count, message textarea
+- ✅ Build couple dashboard layout — `(couple)/layout.tsx`
+- ✅ Build `/couple/dashboard/page.tsx` — overview with recent inquiries
+- ✅ Build `/couple/inquiries/page.tsx` — sent inquiry history with status badges
+- ✅ Build `InquiryCard.tsx` — displays inquiry + vendor response if any
+- ✅ Build `InquiryStatusBadge.tsx` — PENDING / ACCEPTED / DECLINED / CANCELLED
+- ✅ Build `/vendor/inquiries/page.tsx` — inquiry inbox for vendors
+- ✅ Build `InquiryResponseForm.tsx` — vendor accepts/declines with message
+- ✅ Build Server Actions — `submitInquiry`, `respondToInquiry`
+- ✅ Build `/api/inquiries/route.ts` — GET/POST inquiries
+- ✅ Build `/api/inquiries/[id]/route.ts` — GET, PUT (status update)
+- ✅ Zod validation for inquiry form
+- ✅ Auth guard — only authenticated couples can submit inquiries
 
 **Exit Criteria:** Full inquiry lifecycle works — couple submits, vendor sees it, vendor responds, couple sees response and updated status.
 

@@ -200,7 +200,7 @@ const vendors = [
     bio: 'New York\'s leading bridal beauty studio, with a team of ten specialised hair and makeup artists. We offer in-studio and on-location services, trials, and full bridal party packages. Our editorial-trained artists bring a luxury fashion sensibility to bridal beauty — flawless, modern, and made to last all day and night.',
     priceRange: 'LUXURY' as const,
     photos: [
-      { url: 'https://images.unsplash.com/photo-1519014816548-bf5fe059798b?w=800', publicId: 'knotly/seed/beauty-1-1', isPrimary: true },
+      { url: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=800', publicId: 'knotly/seed/beauty-1-1', isPrimary: true },
     ],
   },
   {
@@ -256,7 +256,7 @@ const vendors = [
     bio: 'Affordable wedding coordination services for couples who want professional support without the full-planning price tag. We specialise in day-of and month-of coordination, ensuring your carefully laid plans are executed flawlessly. Based in Phoenix, we serve couples across Arizona and are available for destination weddings.',
     priceRange: 'MID' as const,
     photos: [
-      { url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800', publicId: 'knotly/seed/planner-3-1', isPrimary: true },
+      { url: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800', publicId: 'knotly/seed/planner-3-1', isPrimary: true },
     ],
   },
 ]

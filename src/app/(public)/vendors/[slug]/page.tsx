@@ -1,11 +1,15 @@
 import { notFound } from 'next/navigation'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import Image from 'next/image'
 import { CategoryBadge } from '@/components/vendors/CategoryBadge'
 import { StarRating } from '@/components/ui/StarRating'
 import { Badge } from '@/components/ui/Badge'
+import { InquiryForm } from '@/components/inquiry/InquiryForm'
 import { formatPriceRange } from '@/lib/utils/formatCurrency'
 import { formatShortDate } from '@/lib/utils/formatDate'
+import Link from 'next/link'
 import type { Metadata } from 'next'
 
 interface PageProps {
@@ -27,6 +31,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function VendorProfilePage({ params }: PageProps) {
   const { slug } = await params
+  const session = await getServerSession(authOptions)
 
   const vendor = await prisma.vendorProfile.findUnique({
     where: { slug, isApproved: true },
@@ -51,9 +56,25 @@ export default async function VendorProfilePage({ params }: PageProps) {
   const reviewCount = vendor._count.reviews
   const reviewLabel = reviewCount === 1 ? 'review' : 'reviews'
 
+  const isCouple = session?.user.role === 'COUPLE'
+  const isOwnListing = session?.user.vendorProfileId === vendor.id
+
+  // Check if couple already has a pending inquiry
+  let hasPendingInquiry = false
+  if (isCouple) {
+    const existing = await prisma.inquiry.findFirst({
+      where: {
+        coupleId: session.user.id,
+        vendorId: vendor.id,
+        status: 'PENDING',
+      },
+      select: { id: true },
+    })
+    hasPendingInquiry = !!existing
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero */}
       <div className="relative h-72 w-full bg-gray-200">
         {primaryPhoto && (
           <Image
@@ -98,7 +119,6 @@ export default async function VendorProfilePage({ params }: PageProps) {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
-            {/* About */}
             <div className="bg-white rounded-2xl border border-gray-100 p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-3">About</h2>
               <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
@@ -106,7 +126,6 @@ export default async function VendorProfilePage({ params }: PageProps) {
               </p>
             </div>
 
-            {/* Gallery */}
             {vendor.photos.length > 0 && (
               <div className="bg-white rounded-2xl border border-gray-100 p-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Gallery</h2>
@@ -128,7 +147,6 @@ export default async function VendorProfilePage({ params }: PageProps) {
               </div>
             )}
 
-            {/* Reviews */}
             <div className="bg-white rounded-2xl border border-gray-100 p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">
                 Reviews ({reviewCount})
@@ -161,22 +179,64 @@ export default async function VendorProfilePage({ params }: PageProps) {
             </div>
           </div>
 
-          {/* Inquiry sidebar */}
           <div id="inquiry" className="lg:col-span-1">
             <div className="bg-white rounded-2xl border border-gray-100 p-6 sticky top-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-2">
-                Interested?
-              </h2>
-              <p className="text-sm text-gray-500 mb-4">
-                Send an inquiry to check availability for your wedding date.
-              </p>
-              
-                <a href="/login" className="block w-full text-center rounded-lg bg-rose-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-rose-600 transition-colors">
-                  Sign in to send inquiry
-                </a>
-              <p className="text-xs text-gray-400 text-center mt-3">
-                Free to join — no credit card required
-              </p>
+              {isOwnListing ? (
+                <div className="text-center py-4">
+                  <p className="text-sm text-gray-500">This is your listing.</p>
+                  <Link
+                    href="/vendor/dashboard"
+                    className="mt-3 inline-block text-sm font-medium text-rose-500 hover:text-rose-600"
+                  >
+                    Go to dashboard
+                  </Link>
+                </div>
+              ) : isCouple && hasPendingInquiry ? (
+                <div className="text-center py-4">
+                  <div className="text-2xl mb-2">📬</div>
+                  <p className="text-sm font-medium text-gray-900">Inquiry sent</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    You already have a pending inquiry with this vendor.
+                  </p>
+                  <Link
+                    href="/couple/inquiries"
+                    className="mt-3 inline-block text-sm font-medium text-rose-500 hover:text-rose-600"
+                  >
+                    View your inquiries
+                  </Link>
+                </div>
+              ) : isCouple ? (
+                <>
+                  <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                    Send an inquiry
+                  </h2>
+                  <p className="text-sm text-gray-500 mb-4">
+                    Check availability for your wedding date.
+                  </p>
+                  <InquiryForm
+                    vendorId={vendor.id}
+                    vendorName={vendor.businessName}
+                  />
+                </>
+              ) : (
+                <>
+                  <h2 className="text-lg font-semibold text-gray-900 mb-2">
+                    Interested?
+                  </h2>
+                  <p className="text-sm text-gray-500 mb-4">
+                    Sign in to send an inquiry and check availability.
+                  </p>
+                  <Link
+                    href="/login"
+                    className="block w-full text-center rounded-lg bg-rose-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-rose-600 transition-colors"
+                  >
+                    Sign in to send inquiry
+                  </Link>
+                  <p className="text-xs text-gray-400 text-center mt-3">
+                    Free to join — no credit card required
+                  </p>
+                </>
+              )}
             </div>
           </div>
         </div>
