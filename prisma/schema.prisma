@@ -1,0 +1,127 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  COUPLE
+  VENDOR
+  ADMIN
+}
+
+enum VendorCategory {
+  VENUE
+  PHOTOGRAPHER
+  CATERER
+  FLORIST
+  DJ_ENTERTAINMENT
+  MAKEUP_HAIR
+  WEDDING_PLANNER
+}
+
+enum PriceRange {
+  BUDGET
+  MID
+  PREMIUM
+  LUXURY
+}
+
+enum InquiryStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  CANCELLED
+}
+
+model User {
+  id             String          @id @default(cuid())
+  email          String          @unique
+  password       String
+  name           String
+  role           Role            @default(COUPLE)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  vendorProfile  VendorProfile?
+  savedVendors   SavedVendor[]
+  sentInquiries  Inquiry[]       @relation("CoupleInquiries")
+  reviews        Review[]
+}
+
+model VendorProfile {
+  id           String         @id @default(cuid())
+  userId       String         @unique
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  slug         String         @unique
+  businessName String
+  category     VendorCategory
+  location     String
+  bio          String         @db.Text
+  priceRange   PriceRange
+  isApproved   Boolean        @default(false)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  photos       GalleryPhoto[]
+  inquiries    Inquiry[]      @relation("VendorInquiries")
+  savedBy      SavedVendor[]
+  reviews      Review[]
+}
+
+model GalleryPhoto {
+  id        String        @id @default(cuid())
+  vendorId  String
+  vendor    VendorProfile @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  url       String
+  publicId  String
+  isPrimary Boolean       @default(false)
+  createdAt DateTime      @default(now())
+}
+
+model Inquiry {
+  id         String           @id @default(cuid())
+  coupleId   String
+  couple     User             @relation("CoupleInquiries", fields: [coupleId], references: [id], onDelete: Cascade)
+  vendorId   String
+  vendor     VendorProfile    @relation("VendorInquiries", fields: [vendorId], references: [id], onDelete: Cascade)
+  message    String           @db.Text
+  eventDate  DateTime
+  guestCount Int?
+  status     InquiryStatus    @default(PENDING)
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  response   InquiryResponse?
+}
+
+model InquiryResponse {
+  id        String   @id @default(cuid())
+  inquiryId String   @unique
+  inquiry   Inquiry  @relation(fields: [inquiryId], references: [id], onDelete: Cascade)
+  message   String   @db.Text
+  createdAt DateTime @default(now())
+}
+
+model Review {
+  id        String        @id @default(cuid())
+  coupleId  String
+  couple    User          @relation(fields: [coupleId], references: [id], onDelete: Cascade)
+  vendorId  String
+  vendor    VendorProfile @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  rating    Int
+  body      String        @db.Text
+  createdAt DateTime      @default(now())
+
+  @@unique([coupleId, vendorId])
+}
+
+model SavedVendor {
+  id       String        @id @default(cuid())
+  coupleId String
+  couple   User          @relation(fields: [coupleId], references: [id], onDelete: Cascade)
+  vendorId String
+  vendor   VendorProfile @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  savedAt  DateTime      @default(now())
+
+  @@unique([coupleId, vendorId])
+}
