@@ -151,15 +151,15 @@ The roadmap is structured across 7 phases. Each phase is independently deployabl
 **Goal:** Admins can approve vendor listings and manage the platform. Prevents spam, maintains quality.
 
 ### Tasks
-- [ ] Build admin layout — `(admin)/layout.tsx`
-- [ ] Build `/admin/dashboard/page.tsx` — platform stats (total vendors, couples, inquiries, pending approvals)
-- [ ] Build `/admin/vendors/page.tsx` — all listings with approve/reject actions
-- [ ] Build `/admin/vendors/[id]/page.tsx` — individual vendor review with full listing preview
-- [ ] Build approve/reject Server Actions — toggle `isApproved`, optionally add rejection reason
-- [ ] Build `/admin/users/page.tsx` — user list with role and status
-- [ ] Build `StatsCard.tsx` — reusable dashboard stat widget
-- [ ] Seed admin user in `prisma/seed.ts`
-- [ ] Admin middleware protection — `role: ADMIN` required for all `/admin/*`
+- ✅ Build admin layout — `(admin)/layout.tsx`
+- ✅ Build `/admin/dashboard/page.tsx` — platform stats (total vendors, couples, inquiries, pending approvals)
+- ✅ Build `/admin/vendors/page.tsx` — all listings with approve/reject actions
+- ✅ Build `/admin/vendors/[id]/page.tsx` — individual vendor review with full listing preview
+- ✅ Build approve/reject Server Actions — toggle `isApproved`, optionally add rejection reason
+- ✅ Build `/admin/users/page.tsx` — user list with role and status
+- ✅ Build `StatsCard.tsx` — reusable dashboard stat widget
+- ✅ Seed admin user in `prisma/seed.ts`
+- ✅ Admin middleware protection — `role: ADMIN` required for all `/admin/*`
 
 **Exit Criteria:** Admin can approve a vendor listing and it immediately appears in the public directory. Admin can reject a listing. Stats dashboard reflects live data.
 
