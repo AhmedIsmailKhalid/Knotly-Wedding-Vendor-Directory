@@ -130,17 +130,17 @@ The roadmap is structured across 7 phases. Each phase is independently deployabl
 **Goal:** Couples can save vendors to a shortlist. Couples can leave reviews after interactions.
 
 ### Tasks
-- [ ] Build `SavedVendorsList.tsx` — couple's saved vendor shortlist widget
-- [ ] Build `/couple/saved/page.tsx` — full saved vendors page
-- [ ] Build save/unsave toggle on `VendorCard` — optimistic UI update
-- [ ] Build `/api/saved/route.ts` — GET saved list, POST save, DELETE unsave
-- [ ] Build `useSavedVendors.ts` hook — manages optimistic toggle with server sync
-- [ ] Build `ReviewForm.tsx` — star rating + written review
-- [ ] Build `ReviewCard.tsx`, `ReviewList.tsx`, `RatingSummary.tsx`
-- [ ] Build `/api/reviews/route.ts` — POST create review
-- [ ] Build `/api/reviews/[vendorId]/route.ts` — GET reviews for vendor
-- [ ] Display reviews and aggregate rating on vendor profile page
-- [ ] Guard: only couples who sent an accepted inquiry to a vendor can leave a review
+- ✅ Build `SavedVendorsList.tsx` — couple's saved vendor shortlist widget
+- ✅ Build `/couple/saved/page.tsx` — full saved vendors page
+- ✅ Build save/unsave toggle on `VendorCard` — optimistic UI update
+- ✅ Build `/api/saved/route.ts` — GET saved list, POST save, DELETE unsave
+- ✅ Build `useSavedVendors.ts` hook — manages optimistic toggle with server sync
+- ✅ Build `ReviewForm.tsx` — star rating + written review
+- ✅ Build `ReviewCard.tsx`, `ReviewList.tsx`, `RatingSummary.tsx`
+- ✅ Build `/api/reviews/route.ts` — POST create review
+- ✅ Build `/api/reviews/[vendorId]/route.ts` — GET reviews for vendor
+- ✅ Display reviews and aggregate rating on vendor profile page
+- ✅ Guard: only couples who sent an accepted inquiry to a vendor can leave a review
 
 **Exit Criteria:** Save/unsave works with optimistic UI. Reviews appear on vendor profiles with accurate aggregate rating.
 

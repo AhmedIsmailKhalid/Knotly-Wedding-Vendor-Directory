@@ -7,6 +7,8 @@ import { CategoryBadge } from '@/components/vendors/CategoryBadge'
 import { StarRating } from '@/components/ui/StarRating'
 import { Badge } from '@/components/ui/Badge'
 import { InquiryForm } from '@/components/inquiry/InquiryForm'
+import { SaveButton } from '@/components/vendors/SaveButton'
+import { ReviewForm } from '@/components/reviews/ReviewForm'
 import { formatPriceRange } from '@/lib/utils/formatCurrency'
 import { formatShortDate } from '@/lib/utils/formatDate'
 import Link from 'next/link'
@@ -59,18 +61,36 @@ export default async function VendorProfilePage({ params }: PageProps) {
   const isCouple = session?.user.role === 'COUPLE'
   const isOwnListing = session?.user.vendorProfileId === vendor.id
 
-  // Check if couple already has a pending inquiry
   let hasPendingInquiry = false
+  let isSaved = false
+  let canReview = false
+  let hasReviewed = false
+
   if (isCouple) {
-    const existing = await prisma.inquiry.findFirst({
-      where: {
-        coupleId: session.user.id,
-        vendorId: vendor.id,
-        status: 'PENDING',
-      },
-      select: { id: true },
-    })
-    hasPendingInquiry = !!existing
+    const [pendingInquiry, savedRecord, acceptedInquiry, existingReview] =
+      await Promise.all([
+        prisma.inquiry.findFirst({
+          where: { coupleId: session.user.id, vendorId: vendor.id, status: 'PENDING' },
+          select: { id: true },
+        }),
+        prisma.savedVendor.findFirst({
+          where: { coupleId: session.user.id, vendorId: vendor.id },
+          select: { id: true },
+        }),
+        prisma.inquiry.findFirst({
+          where: { coupleId: session.user.id, vendorId: vendor.id, status: 'ACCEPTED' },
+          select: { id: true },
+        }),
+        prisma.review.findFirst({
+          where: { coupleId: session.user.id, vendorId: vendor.id },
+          select: { id: true },
+        }),
+      ])
+
+    hasPendingInquiry = !!pendingInquiry
+    isSaved = !!savedRecord
+    canReview = !!acceptedInquiry && !existingReview
+    hasReviewed = !!existingReview
   }
 
   return (
@@ -109,10 +129,15 @@ export default async function VendorProfilePage({ params }: PageProps) {
 
             <div className="flex flex-col items-start sm:items-end gap-2">
               <Badge variant="gray">{formatPriceRange(vendor.priceRange)}</Badge>
-              
-              <a href="#inquiry" className="rounded-lg bg-rose-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-rose-600 transition-colors">
-                Send inquiry
-              </a>
+              <div className="flex gap-2">
+                {isCouple && (
+                  <SaveButton vendorId={vendor.id} initialSaved={isSaved} />
+                )}
+                
+                 <a href="#inquiry" className="rounded-lg bg-rose-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-rose-600 transition-colors">
+                    Send inquiry
+                 </a>
+              </div>
             </div>
           </div>
         </div>
@@ -174,6 +199,26 @@ export default async function VendorProfilePage({ params }: PageProps) {
                       </p>
                     </div>
                   ))}
+                </div>
+              )}
+
+              {canReview && (
+                <div className="mt-6 pt-6 border-t border-gray-100">
+                  <h3 className="text-base font-semibold text-gray-900 mb-4">
+                    Leave a review
+                  </h3>
+                  <ReviewForm
+                    vendorId={vendor.id}
+                    vendorName={vendor.businessName}
+                  />
+                </div>
+              )}
+
+              {hasReviewed && (
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <p className="text-sm text-gray-500">
+                    You have already reviewed this vendor.
+                  </p>
                 </div>
               )}
             </div>
