@@ -170,20 +170,20 @@ The roadmap is structured across 7 phases. Each phase is independently deployabl
 **Goal:** Production-ready finish. Performance, SEO, accessibility, error states, empty states.
 
 ### Tasks
-- [ ] Add `generateMetadata()` to all public pages — title, description, Open Graph
-- [ ] Add `sitemap.ts` — dynamic sitemap including all approved vendor slugs
-- [ ] Add `robots.ts`
-- [ ] Implement loading skeletons — `Skeleton.tsx` for all data-fetching pages
-- [ ] Implement empty states — no vendors found, no inquiries, no saved vendors
-- [ ] Implement error boundaries — `error.tsx` per route group
-- [ ] Add toast notification system — success/error feedback on all mutations
-- [ ] Responsive audit — test all pages on mobile breakpoints
-- [ ] Accessibility audit — keyboard navigation, ARIA labels, focus management
-- [ ] Image optimization — `next/image` on all vendor photos, blur placeholder
-- [ ] Rate limiting on inquiry submission — prevent spam
-- [ ] Final environment variable audit — no secrets in client components
-- [ ] Lighthouse audit — target 90+ on Performance, Accessibility, Best Practices
-- [ ] Update README.md — setup instructions, architecture overview, screenshots
+- ✅ Add `generateMetadata()` to all public pages — title, description, Open Graph
+- ✅ Add `sitemap.ts` — dynamic sitemap including all approved vendor slugs
+- ✅ Add `robots.ts`
+- ✅ Implement loading skeletons — `Skeleton.tsx` for all data-fetching pages
+- ✅ Implement empty states — no vendors found, no inquiries, no saved vendors
+- ✅ Implement error boundaries — `error.tsx` per route group
+- ✅ Add toast notification system — success/error feedback on all mutations
+- ✅ Responsive audit — test all pages on mobile breakpoints
+- ✅ Accessibility audit — keyboard navigation, ARIA labels, focus management
+- ✅ Image optimization — `next/image` on all vendor photos, blur placeholder
+- ✅ Rate limiting on inquiry submission — prevent spam
+- ✅ Final environment variable audit — no secrets in client components
+- ✅ Lighthouse audit — target 90+ on Performance, Accessibility, Best Practices
+- ✅ Update README.md — setup instructions, architecture overview, screenshots
 
 **Exit Criteria:** Lighthouse 90+ across all categories. All pages have correct metadata. Mobile experience is polished. README is complete.
 
@@ -192,7 +192,7 @@ The roadmap is structured across 7 phases. Each phase is independently deployabl
 ## Development Order Summary
 
 ```
-Phase 0 → Scaffold & DB          [Infrastructure]
+Phase 0 → Scaffold & DB           [Infrastructure]
 Phase 1 → Authentication          [Foundation — everything needs auth]
 Phase 2 → Vendor Listings         [Supply side — content needed before browsing]
 Phase 3 → Public Directory        [Demand side — core product experience]

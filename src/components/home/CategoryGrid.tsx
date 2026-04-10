@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { VendorCategory } from '@prisma/client'
-import { CATEGORY_LABELS, CATEGORY_ICONS, CATEGORY_SLUGS } from '@/lib/constants/categories'
+import { CATEGORY_LABELS, CATEGORY_ICONS } from '@/lib/constants/categories'
 
 export function CategoryGrid() {
   return (

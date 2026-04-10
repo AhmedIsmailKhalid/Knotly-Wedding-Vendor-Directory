@@ -1,4 +1,4 @@
-import type { VendorProfile, GalleryPhoto, Review, User, VendorCategory, PriceRange } from '@prisma/client'
+import type { VendorProfile, GalleryPhoto, Review, VendorCategory, PriceRange } from '@prisma/client'
 
 export type VendorWithPhotos = VendorProfile & {
   photos: GalleryPhoto[]

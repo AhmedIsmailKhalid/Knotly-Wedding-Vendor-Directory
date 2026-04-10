@@ -12,15 +12,43 @@ interface InquiryResponseFormProps {
   onClose: () => void
 }
 
-export function InquiryResponseForm({
-  inquiryId,
-  coupleName,
-  onClose,
-}: InquiryResponseFormProps) {
+type ResponseStatus = 'REPLIED' | 'ACCEPTED' | 'DECLINED'
+
+const STATUS_OPTIONS: { value: ResponseStatus; label: string; desc: string; active: string; inactive: string }[] = [
+  {
+    value: 'REPLIED',
+    label: 'Reply',
+    desc: 'Continue the conversation',
+    active: 'border-blue-400 bg-blue-50 text-blue-700',
+    inactive: 'border-gray-200 text-gray-600 hover:border-gray-300',
+  },
+  {
+    value: 'ACCEPTED',
+    label: 'Accept',
+    desc: 'Confirm the booking',
+    active: 'border-green-400 bg-green-50 text-green-700',
+    inactive: 'border-gray-200 text-gray-600 hover:border-gray-300',
+  },
+  {
+    value: 'DECLINED',
+    label: 'Decline',
+    desc: 'Turn down the request',
+    active: 'border-red-400 bg-red-50 text-red-700',
+    inactive: 'border-gray-200 text-gray-600 hover:border-gray-300',
+  },
+]
+
+const PLACEHOLDERS: Record<ResponseStatus, string> = {
+  REPLIED: 'Thanks for reaching out! We have availability on that date. Could you tell us more about...',
+  ACCEPTED: 'Great news! We would love to be part of your wedding day...',
+  DECLINED: 'Thank you for your inquiry. Unfortunately we are unavailable on that date...',
+}
+
+export function InquiryResponseForm({ inquiryId, coupleName, onClose }: InquiryResponseFormProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
-  const [selectedStatus, setSelectedStatus] = useState<'ACCEPTED' | 'DECLINED'>('ACCEPTED')
+  const [selectedStatus, setSelectedStatus] = useState<ResponseStatus>('REPLIED')
 
   const {
     register,
@@ -29,7 +57,7 @@ export function InquiryResponseForm({
     formState: { errors },
   } = useForm<InquiryResponseInput>({
     resolver: zodResolver(inquiryResponseSchema),
-    defaultValues: { status: 'ACCEPTED' },
+    defaultValues: { status: 'REPLIED' },
   })
 
   async function onSubmit(data: InquiryResponseInput) {
@@ -68,26 +96,23 @@ export function InquiryResponseForm({
       )}
 
       <div>
-        <p className="text-sm font-medium text-gray-700 mb-2">Response</p>
-        <div className="grid grid-cols-2 gap-3">
-          {(['ACCEPTED', 'DECLINED'] as const).map((status) => (
+        <p className="text-sm font-medium text-gray-700 mb-2">Response type</p>
+        <div className="grid grid-cols-3 gap-2">
+          {STATUS_OPTIONS.map((option) => (
             <button
-              key={status}
+              key={option.value}
               type="button"
               onClick={() => {
-                setSelectedStatus(status)
-                setValue('status', status, { shouldValidate: true })
+                setSelectedStatus(option.value)
+                setValue('status', option.value, { shouldValidate: true })
               }}
               className={[
-                'rounded-lg border-2 py-2.5 text-sm font-semibold transition-colors',
-                selectedStatus === status
-                  ? status === 'ACCEPTED'
-                    ? 'border-green-400 bg-green-50 text-green-700'
-                    : 'border-red-400 bg-red-50 text-red-700'
-                  : 'border-gray-200 text-gray-600 hover:border-gray-300',
+                'flex flex-col items-center gap-0.5 rounded-xl border-2 py-3 px-2 text-center transition-colors',
+                selectedStatus === option.value ? option.active : option.inactive,
               ].join(' ')}
             >
-              {status === 'ACCEPTED' ? 'Accept' : 'Decline'}
+              <span className="text-sm font-semibold">{option.label}</span>
+              <span className="text-xs opacity-70">{option.desc}</span>
             </button>
           ))}
         </div>
@@ -101,11 +126,7 @@ export function InquiryResponseForm({
         <textarea
           {...register('message')}
           rows={4}
-          placeholder={
-            selectedStatus === 'ACCEPTED'
-              ? 'Great news! We would love to be part of your wedding day...'
-              : 'Thank you for your inquiry. Unfortunately...'
-          }
+          placeholder={PLACEHOLDERS[selectedStatus]}
           className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-rose-400 focus:outline-none focus:ring-1 focus:ring-rose-400 resize-none"
         />
         {errors.message && (

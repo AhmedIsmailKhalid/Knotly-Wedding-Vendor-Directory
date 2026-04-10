@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Admin Dashboard — Knotly',
@@ -71,12 +72,12 @@ export default async function AdminDashboardPage() {
               Pending Approvals
             </h2>
 
-            <a
+            <Link
               href="/admin/vendors?filter=pending"
               className="text-sm font-medium text-rose-500 hover:text-rose-600"
             >
               View all
-            </a>
+            </Link>
           </div>
 
           <div className="space-y-3">

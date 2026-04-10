@@ -3,7 +3,7 @@ import { authOptions } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
 import { ListingWizard } from '@/components/listing/ListingWizard'
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Create Listing — Knotly',
@@ -22,7 +22,7 @@ export default async function CreateListingPage() {
   })
 
   if (existing) {
-    redirect('/vendor/dashboard')
+    redirect('/vendor/listing')
   }
 
   return (

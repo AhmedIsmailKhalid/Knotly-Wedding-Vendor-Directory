@@ -297,6 +297,16 @@ async function main() {
     },
   })
 
+  // Create second demo couple
+  await prisma.user.create({
+    data: {
+      name: 'Emily & Tom',
+      email: 'couple2@knotly.dev',
+      password: hashedPassword,
+      role: 'COUPLE',
+    },
+  })
+
   console.log('👤 Created demo users')
 
   // Create vendors
@@ -349,7 +359,9 @@ async function main() {
   console.log('Demo accounts (password: Demo1234!):')
   console.log('  Admin:  admin@knotly.dev')
   console.log('  Couple: couple@knotly.dev')
-  console.log('  Vendor: grand.estate@knotly.dev (and others)')
+  console.log('  Couple 2: couple2@knotly.dev')
+  console.log('  Vendor 1: grand.estate@knotly.dev (and others)')
+  console.log('  Vendor 2: bliss.co@knotly.dev (and others)')
 }
 
 main()

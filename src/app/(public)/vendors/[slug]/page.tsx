@@ -61,16 +61,20 @@ export default async function VendorProfilePage({ params }: PageProps) {
   const isCouple = session?.user.role === 'COUPLE'
   const isOwnListing = session?.user.vendorProfileId === vendor.id
 
-  let hasPendingInquiry = false
+  let hasActiveInquiry = false
   let isSaved = false
   let canReview = false
   let hasReviewed = false
 
   if (isCouple) {
-    const [pendingInquiry, savedRecord, acceptedInquiry, existingReview] =
+    const [activeInquiry, savedRecord, acceptedInquiry, existingReview] =
       await Promise.all([
         prisma.inquiry.findFirst({
-          where: { coupleId: session.user.id, vendorId: vendor.id, status: 'PENDING' },
+          where: {
+            coupleId: session.user.id,
+            vendorId: vendor.id,
+            status: { in: ['PENDING', 'REPLIED'] },
+          },
           select: { id: true },
         }),
         prisma.savedVendor.findFirst({
@@ -87,7 +91,7 @@ export default async function VendorProfilePage({ params }: PageProps) {
         }),
       ])
 
-    hasPendingInquiry = !!pendingInquiry
+    hasActiveInquiry = !!activeInquiry
     isSaved = !!savedRecord
     canReview = !!acceptedInquiry && !existingReview
     hasReviewed = !!existingReview
@@ -133,10 +137,9 @@ export default async function VendorProfilePage({ params }: PageProps) {
                 {isCouple && (
                   <SaveButton vendorId={vendor.id} initialSaved={isSaved} />
                 )}
-                
-                 <a href="#inquiry" className="rounded-lg bg-rose-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-rose-600 transition-colors">
-                    Send inquiry
-                 </a>
+                <a href="#inquiry" className="rounded-lg bg-rose-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-rose-600 transition-colors">
+                  Send inquiry
+                </a>
               </div>
             </div>
           </div>
@@ -229,24 +232,18 @@ export default async function VendorProfilePage({ params }: PageProps) {
               {isOwnListing ? (
                 <div className="text-center py-4">
                   <p className="text-sm text-gray-500">This is your listing.</p>
-                  <Link
-                    href="/vendor/dashboard"
-                    className="mt-3 inline-block text-sm font-medium text-rose-500 hover:text-rose-600"
-                  >
+                  <Link href="/vendor/dashboard" className="mt-3 inline-block text-sm font-medium text-rose-500 hover:text-rose-600">
                     Go to dashboard
                   </Link>
                 </div>
-              ) : isCouple && hasPendingInquiry ? (
+              ) : isCouple && hasActiveInquiry ? (
                 <div className="text-center py-4">
                   <div className="text-2xl mb-2">📬</div>
-                  <p className="text-sm font-medium text-gray-900">Inquiry sent</p>
+                  <p className="text-sm font-medium text-gray-900">Inquiry active</p>
                   <p className="text-xs text-gray-500 mt-1">
-                    You already have a pending inquiry with this vendor.
+                    You already have an active inquiry with this vendor.
                   </p>
-                  <Link
-                    href="/couple/inquiries"
-                    className="mt-3 inline-block text-sm font-medium text-rose-500 hover:text-rose-600"
-                  >
+                  <Link href="/couple/inquiries" className="mt-3 inline-block text-sm font-medium text-rose-500 hover:text-rose-600">
                     View your inquiries
                   </Link>
                 </div>
@@ -271,10 +268,7 @@ export default async function VendorProfilePage({ params }: PageProps) {
                   <p className="text-sm text-gray-500 mb-4">
                     Sign in to send an inquiry and check availability.
                   </p>
-                  <Link
-                    href="/login"
-                    className="block w-full text-center rounded-lg bg-rose-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-rose-600 transition-colors"
-                  >
+                  <Link href="/login" className="block w-full text-center rounded-lg bg-rose-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-rose-600 transition-colors">
                     Sign in to send inquiry
                   </Link>
                   <p className="text-xs text-gray-400 text-center mt-3">

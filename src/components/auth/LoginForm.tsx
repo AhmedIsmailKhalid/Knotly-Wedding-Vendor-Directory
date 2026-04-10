@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { loginSchema, type LoginInput } from '@/lib/validations/auth'
+import { DemoCredentials } from './DemoCredentials'
 
 export function LoginForm() {
   const router = useRouter()
@@ -16,10 +17,16 @@ export function LoginForm() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
   })
+
+  function handleDemoSelect(email: string, password: string) {
+    setValue('email', email)
+    setValue('password', password)
+  }
 
   async function onSubmit(data: LoginInput) {
     setIsLoading(true)
@@ -37,7 +44,6 @@ export function LoginForm() {
         return
       }
 
-      // Fetch session to determine role-based redirect
       const sessionRes = await fetch('/api/auth/session')
       const session = await sessionRes.json()
       const role = session?.user?.role
@@ -84,11 +90,9 @@ export function LoginForm() {
       </div>
 
       <div>
-        <div className="flex items-center justify-between mb-1">
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-            Password
-          </label>
-        </div>
+        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+          Password
+        </label>
         <input
           {...register('password')}
           id="password"
@@ -116,6 +120,8 @@ export function LoginForm() {
           Create one
         </Link>
       </p>
+
+      <DemoCredentials onSelect={handleDemoSelect} />
     </form>
   )
 }

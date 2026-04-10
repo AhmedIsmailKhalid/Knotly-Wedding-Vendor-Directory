@@ -26,7 +26,7 @@ export const inquiryResponseSchema = z.object({
     .string()
     .min(10, 'Response must be at least 10 characters')
     .max(1000, 'Response must be under 1000 characters'),
-  status: z.enum(['ACCEPTED', 'DECLINED']),
+  status: z.enum(['REPLIED', 'ACCEPTED', 'DECLINED']),
 })
 
 export type InquiryInput = z.infer<typeof inquirySchema>

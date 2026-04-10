@@ -31,7 +31,9 @@ export async function GET(
         couple: {
           select: { id: true, name: true, email: true },
         },
-        response: true,
+        responses: {
+          orderBy: { createdAt: 'asc' },
+        },
       },
     })
 
@@ -74,7 +76,6 @@ export async function PUT(
         id: true,
         vendorId: true,
         status: true,
-        response: true,
       },
     })
 
@@ -86,9 +87,10 @@ export async function PUT(
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
-    if (inquiry.status !== 'PENDING') {
+    // Cannot respond to already accepted or declined inquiries
+    if (inquiry.status === 'ACCEPTED' || inquiry.status === 'DECLINED') {
       return NextResponse.json(
-        { error: 'Inquiry has already been responded to' },
+        { error: 'This inquiry has already been finalised' },
         { status: 409 }
       )
     }
@@ -120,7 +122,7 @@ export async function PUT(
             },
           },
           couple: { select: { id: true, name: true, email: true } },
-          response: true,
+          responses: { orderBy: { createdAt: 'asc' } },
         },
       }),
       prisma.inquiryResponse.create({

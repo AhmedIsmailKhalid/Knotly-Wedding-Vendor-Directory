@@ -31,6 +31,7 @@ enum PriceRange {
 
 enum InquiryStatus {
   PENDING
+  REPLIED
   ACCEPTED
   DECLINED
   CANCELLED
@@ -80,26 +81,27 @@ model GalleryPhoto {
 }
 
 model Inquiry {
-  id         String           @id @default(cuid())
+  id         String            @id @default(cuid())
   coupleId   String
-  couple     User             @relation("CoupleInquiries", fields: [coupleId], references: [id], onDelete: Cascade)
+  couple     User              @relation("CoupleInquiries", fields: [coupleId], references: [id], onDelete: Cascade)
   vendorId   String
-  vendor     VendorProfile    @relation("VendorInquiries", fields: [vendorId], references: [id], onDelete: Cascade)
-  message    String           @db.Text
+  vendor     VendorProfile     @relation("VendorInquiries", fields: [vendorId], references: [id], onDelete: Cascade)
+  message    String            @db.Text
   eventDate  DateTime
   guestCount Int?
-  status     InquiryStatus    @default(PENDING)
-  createdAt  DateTime         @default(now())
-  updatedAt  DateTime         @updatedAt
-  response   InquiryResponse?
+  status     InquiryStatus     @default(PENDING)
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+  responses  InquiryResponse[]
 }
 
 model InquiryResponse {
-  id        String   @id @default(cuid())
-  inquiryId String   @unique
-  inquiry   Inquiry  @relation(fields: [inquiryId], references: [id], onDelete: Cascade)
-  message   String   @db.Text
-  createdAt DateTime @default(now())
+  id         String   @id @default(cuid())
+  inquiryId  String
+  inquiry    Inquiry  @relation(fields: [inquiryId], references: [id], onDelete: Cascade)
+  message    String   @db.Text
+  senderRole Role     @default(VENDOR)
+  createdAt  DateTime @default(now())
 }
 
 model Review {

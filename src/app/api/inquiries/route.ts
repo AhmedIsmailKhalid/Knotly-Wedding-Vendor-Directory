@@ -4,7 +4,7 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { inquirySchema } from '@/lib/validations/inquiry'
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const session = await getServerSession(authOptions)
 
@@ -24,7 +24,9 @@ export async function GET(req: NextRequest) {
             location: true,
           },
         },
-        response: true,
+        responses: {
+          orderBy: { createdAt: 'asc' as const },
+        },
       },
       orderBy: { createdAt: 'desc' },
     })
@@ -103,7 +105,9 @@ export async function POST(req: NextRequest) {
             location: true,
           },
         },
-        response: true,
+        responses: {
+          orderBy: { createdAt: 'asc' as const },
+        },
       },
     })
 
