@@ -5,7 +5,9 @@ import { prisma } from '@/lib/prisma'
 import { createListingSchema } from '@/lib/validations/vendor'
 import { generateUniqueSlug } from '@/lib/utils/generateSlug'
 import { searchSchema } from '@/lib/validations/search'
-import { Prisma } from '@prisma/client'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type WhereInput = Record<string, any>
 
 const VENDORS_PER_PAGE = 12
 
@@ -27,7 +29,7 @@ export async function GET(req: NextRequest) {
     const { q, category, location, priceRange, page } = params.data
     const skip = (page - 1) * VENDORS_PER_PAGE
 
-    const where: Prisma.VendorProfileWhereInput = {
+    const where: WhereInput = {
       isApproved: true,
       ...(category && { category }),
       ...(location && { location }),

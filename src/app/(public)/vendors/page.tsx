@@ -4,9 +4,11 @@ import { VendorGrid } from '@/components/vendors/VendorGrid'
 import { VendorFilters } from '@/components/vendors/VendorFilters'
 import { VendorSearchBar } from '@/components/vendors/VendorSearchBar'
 import { searchSchema } from '@/lib/validations/search'
-import type { Prisma } from '@prisma/client'
 import type { VendorCardData } from '@/types/vendor'
 import type { Metadata } from 'next'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type WhereInput = Record<string, any>
 
 export const metadata: Metadata = {
   title: 'Find Wedding Vendors — Knotly',
@@ -33,7 +35,7 @@ async function getVendors(rawParams: Record<string, string>) {
   const { q, category, location, priceRange, page } = params.data
   const skip = (page - 1) * VENDORS_PER_PAGE
 
-  const where: Prisma.VendorProfileWhereInput = {
+  const where: WhereInput = {
     isApproved: true,
     ...(category && { category }),
     ...(location && { location }),

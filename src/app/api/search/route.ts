@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { searchSchema } from '@/lib/validations/search'
-import { Prisma } from '@prisma/client'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type WhereInput = Record<string, any>
 
 export async function GET(req: NextRequest) {
   try {
@@ -24,7 +26,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ suggestions: [] })
     }
 
-    const where: Prisma.VendorProfileWhereInput = {
+    const where: WhereInput = {
       isApproved: true,
       OR: [
         { businessName: { contains: q, mode: 'insensitive' } },
