@@ -66,7 +66,7 @@ export default async function CoupleSavedPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {vendors.map((vendor) => (
+          {vendors.map((vendor: typeof vendors[number]) => (
             <VendorCard key={vendor.id} vendor={vendor} />
           ))}
         </div>

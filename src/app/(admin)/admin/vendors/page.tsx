@@ -76,7 +76,7 @@ export default async function AdminVendorsPage({ searchParams }: PageProps) {
           </thead>
 
           <tbody>
-            {vendors.map((vendor) => (
+            {vendors.map((vendor: typeof vendors[number]) => (
               <tr
                 key={vendor.id}
                 className="border-b border-gray-50 transition-colors last:border-0 hover:bg-gray-50"
