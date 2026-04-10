@@ -1,4 +1,4 @@
-import type { VendorProfile, GalleryPhoto, Review } from '@prisma/client'
+import type { VendorProfile, GalleryPhoto, Review } from '@/generated/prisma'
 
 export type VendorCategory = 'VENUE' | 'PHOTOGRAPHER' | 'CATERER' | 'FLORIST' | 'DJ_ENTERTAINMENT' | 'MAKEUP_HAIR' | 'WEDDING_PLANNER'
 

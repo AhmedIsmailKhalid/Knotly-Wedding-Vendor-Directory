@@ -1,4 +1,4 @@
-import type { Inquiry, InquiryResponse, VendorProfile } from '@prisma/client'
+import type { Inquiry, InquiryResponse, VendorProfile } from '@/generated/prisma'
 
 export type InquiryStatus = 'PENDING' | 'REPLIED' | 'ACCEPTED' | 'DECLINED' | 'CANCELLED'
 

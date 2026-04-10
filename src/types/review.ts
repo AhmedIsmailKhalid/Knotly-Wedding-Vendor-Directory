@@ -1,4 +1,4 @@
-import type { Review } from '@prisma/client'
+import type { Review } from '@/generated/prisma'
 
 export type ReviewWithCouple = Review & {
   couple: { id: string; name: string }

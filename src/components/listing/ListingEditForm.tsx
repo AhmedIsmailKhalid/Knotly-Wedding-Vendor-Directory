@@ -9,7 +9,7 @@ import { CATEGORY_LABELS } from '@/lib/constants/categories'
 import { PRICE_RANGE_LABELS, PRICE_RANGE_DESCRIPTIONS } from '@/lib/constants/pricing'
 import { LOCATIONS } from '@/lib/constants/locations'
 import { cn } from '@/lib/utils/cn'
-import type { VendorProfile, GalleryPhoto } from '@prisma/client'
+import type { VendorProfile, GalleryPhoto } from '@/generated/prisma'
 
 type VendorProfileWithPhotos = VendorProfile & { photos: GalleryPhoto[] }
 
