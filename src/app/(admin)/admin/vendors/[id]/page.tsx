@@ -119,7 +119,7 @@ export default async function AdminVendorReviewPage({ params }: PageProps) {
                 Gallery ({vendor.photos.length} photos)
               </p>
               <div className="grid grid-cols-3 gap-3">
-                {vendor.photos.map((photo) => (
+                {vendor.photos.map((photo: typeof vendor.photos[number]) => (
                   <div
                     key={photo.id}
                     className="relative aspect-square rounded-lg overflow-hidden"
