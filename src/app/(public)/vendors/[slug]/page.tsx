@@ -51,7 +51,7 @@ export default async function VendorProfilePage({ params }: PageProps) {
 
   const avgRating =
     vendor.reviews.length > 0
-      ? vendor.reviews.reduce((sum, r) => sum + r.rating, 0) / vendor.reviews.length
+      ? vendor.reviews.reduce((sum: number, r) => sum + r.rating, 0) / vendor.reviews.length
       : 0
 
   const primaryPhoto = vendor.photos.find((p) => p.isPrimary) ?? vendor.photos[0]
