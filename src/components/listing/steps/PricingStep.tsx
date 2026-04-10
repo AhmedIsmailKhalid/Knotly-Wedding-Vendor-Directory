@@ -38,7 +38,7 @@ export function PricingStep({ defaultValues, onNext, onBack }: PricingStepProps)
             <button
               key={range}
               type="button"
-              onClick={() => setValue('priceRange', range, { shouldValidate: true })}
+              onClick={() => setValue('priceRange', range as 'BUDGET' | 'MID' | 'PREMIUM' | 'LUXURY', { shouldValidate: true })}
               className={cn(
                 'flex flex-col items-start gap-1 rounded-xl border-2 p-4 text-left transition-all',
                 selected === range
