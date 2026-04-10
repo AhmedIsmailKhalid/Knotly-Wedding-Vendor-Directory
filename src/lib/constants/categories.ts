@@ -1,6 +1,4 @@
-import { VendorCategory } from '@prisma/client'
-
-export const CATEGORY_LABELS: Record<VendorCategory, string> = {
+export const CATEGORY_LABELS: Record<string, string> = {
   VENUE: 'Venue',
   PHOTOGRAPHER: 'Photographer',
   CATERER: 'Caterer',
@@ -10,7 +8,7 @@ export const CATEGORY_LABELS: Record<VendorCategory, string> = {
   WEDDING_PLANNER: 'Wedding Planner',
 }
 
-export const CATEGORY_SLUGS: Record<VendorCategory, string> = {
+export const CATEGORY_SLUGS: Record<string, string> = {
   VENUE: 'venues',
   PHOTOGRAPHER: 'photographers',
   CATERER: 'caterers',
@@ -20,7 +18,7 @@ export const CATEGORY_SLUGS: Record<VendorCategory, string> = {
   WEDDING_PLANNER: 'wedding-planners',
 }
 
-export const CATEGORY_ICONS: Record<VendorCategory, string> = {
+export const CATEGORY_ICONS: Record<string, string> = {
   VENUE: '🏛️',
   PHOTOGRAPHER: '📷',
   CATERER: '🍽️',
@@ -30,4 +28,4 @@ export const CATEGORY_ICONS: Record<VendorCategory, string> = {
   WEDDING_PLANNER: '📋',
 }
 
-export const CATEGORIES = Object.values(VendorCategory)
+export const CATEGORIES = Object.keys(CATEGORY_LABELS)
