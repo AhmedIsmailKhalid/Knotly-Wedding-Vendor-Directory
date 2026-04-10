@@ -4,7 +4,7 @@ import { VendorGrid } from '@/components/vendors/VendorGrid'
 import { VendorFilters } from '@/components/vendors/VendorFilters'
 import { VendorSearchBar } from '@/components/vendors/VendorSearchBar'
 import { searchSchema } from '@/lib/validations/search'
-import { Prisma } from '@prisma/client'
+import type { Prisma } from '@prisma/client'
 import type { VendorCardData } from '@/types/vendor'
 import type { Metadata } from 'next'
 
