@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { signOut } from 'next-auth/react'
 import Link from 'next/link'
-import type { Role } from '@prisma/client'
+import type { Role } from '@/types/auth'
 
 interface HeaderUserMenuProps {
   name: string

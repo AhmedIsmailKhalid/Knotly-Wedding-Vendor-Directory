@@ -3,14 +3,13 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useDebounce } from '@/hooks/useDebounce'
-import { VendorCategory } from '@prisma/client'
 import { CATEGORY_LABELS } from '@/lib/constants/categories'
 import Link from 'next/link'
 
 interface Suggestion {
   slug: string
   businessName: string
-  category: VendorCategory
+  category: string
   location: string
 }
 

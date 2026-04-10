@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/prisma'
 import { registerCoupleSchema, registerVendorSchema } from '@/lib/validations/auth'
-import { Role } from '@prisma/client'
+
+type Role = 'COUPLE' | 'VENDOR' | 'ADMIN'
 
 export async function POST(req: NextRequest) {
   try {

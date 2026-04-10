@@ -1,6 +1,4 @@
-import type { Role } from '@prisma/client'
-
-export type { Role }
+export type Role = 'COUPLE' | 'VENDOR' | 'ADMIN'
 
 export type SessionUser = {
   id: string

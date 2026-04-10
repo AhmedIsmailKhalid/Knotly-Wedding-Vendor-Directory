@@ -1,6 +1,8 @@
 import Link from 'next/link'
-import { VendorCategory } from '@prisma/client'
 import { CATEGORY_LABELS, CATEGORY_ICONS } from '@/lib/constants/categories'
+
+const CATEGORIES = Object.keys(CATEGORY_LABELS)
+
 
 export function CategoryGrid() {
   return (
@@ -10,7 +12,7 @@ export function CategoryGrid() {
           Browse by category
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          {Object.values(VendorCategory).map((cat) => (
+          {Object.values(CATEGORIES).map((cat) => (
             <Link
               key={cat}
               href={`/vendors?category=${cat}`}
