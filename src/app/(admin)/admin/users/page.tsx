@@ -39,7 +39,7 @@ export default async function AdminUsersPage() {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {users.map((user: typeof users[number]) => (
               <tr
                 key={user.id}
                 className="border-b border-gray-50 last:border-0 hover:bg-gray-50 transition-colors"
