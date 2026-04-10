@@ -8,11 +8,13 @@ import { basicInfoSchema, pricingSchema, type BasicInfoInput, type PricingInput 
 import { CATEGORY_LABELS } from '@/lib/constants/categories'
 import { PRICE_RANGE_LABELS, PRICE_RANGE_DESCRIPTIONS } from '@/lib/constants/pricing'
 import { LOCATIONS } from '@/lib/constants/locations'
-import { VendorCategory, PriceRange } from '@prisma/client'
 import { cn } from '@/lib/utils/cn'
 import type { VendorProfile, GalleryPhoto } from '@prisma/client'
 
 type VendorProfileWithPhotos = VendorProfile & { photos: GalleryPhoto[] }
+
+const CATEGORIES = Object.keys(CATEGORY_LABELS) as Array<keyof typeof CATEGORY_LABELS>
+const PRICE_RANGES = Object.keys(PRICE_RANGE_LABELS) as Array<keyof typeof PRICE_RANGE_LABELS>
 
 interface ListingEditFormProps {
   vendorProfile: VendorProfileWithPhotos
@@ -22,7 +24,7 @@ export function ListingEditForm({ vendorProfile }: ListingEditFormProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
-  const [selectedPriceRange, setSelectedPriceRange] = useState<PriceRange>(vendorProfile.priceRange)
+  const [selectedPriceRange, setSelectedPriceRange] = useState(vendorProfile.priceRange)
 
   const {
     register,
@@ -38,9 +40,7 @@ export function ListingEditForm({ vendorProfile }: ListingEditFormProps) {
     },
   })
 
-  const {
-    setValue: setPricingValue,
-  } = useForm<PricingInput>({
+  const { setValue: setPricingValue } = useForm<PricingInput>({
     resolver: zodResolver(pricingSchema),
     defaultValues: { priceRange: vendorProfile.priceRange },
   })
@@ -106,7 +106,7 @@ export function ListingEditForm({ vendorProfile }: ListingEditFormProps) {
           {...register('category')}
           className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 focus:border-rose-400 focus:outline-none focus:ring-1 focus:ring-rose-400"
         >
-          {Object.values(VendorCategory).map((cat) => (
+          {CATEGORIES.map((cat) => (
             <option key={cat} value={cat}>
               {CATEGORY_LABELS[cat]}
             </option>
@@ -155,13 +155,13 @@ export function ListingEditForm({ vendorProfile }: ListingEditFormProps) {
           Price range
         </label>
         <div className="grid grid-cols-2 gap-3">
-          {Object.values(PriceRange).map((range) => (
+          {PRICE_RANGES.map((range) => (
             <button
               key={range}
               type="button"
               onClick={() => {
-                setSelectedPriceRange(range)
-                setPricingValue('priceRange', range)
+                setSelectedPriceRange(range as typeof vendorProfile.priceRange)
+                setPricingValue('priceRange', range as typeof vendorProfile.priceRange)
               }}
               className={cn(
                 'flex flex-col items-start gap-1 rounded-xl border-2 p-4 text-left transition-all',

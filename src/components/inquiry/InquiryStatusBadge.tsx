@@ -1,5 +1,6 @@
-import { InquiryStatus } from '@prisma/client'
 import { Badge } from '@/components/ui/Badge'
+
+type InquiryStatus = 'PENDING' | 'REPLIED' | 'ACCEPTED' | 'DECLINED' | 'CANCELLED'
 
 interface InquiryStatusBadgeProps {
   status: InquiryStatus

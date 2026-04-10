@@ -5,7 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { basicInfoSchema, type BasicInfoInput } from '@/lib/validations/vendor'
 import { CATEGORY_LABELS } from '@/lib/constants/categories'
 import { LOCATIONS } from '@/lib/constants/locations'
-import { VendorCategory } from '@prisma/client'
+
+const CATEGORIES = Object.keys(CATEGORY_LABELS) as Array<keyof typeof CATEGORY_LABELS>
 
 interface BasicInfoStepProps {
   defaultValues?: Partial<BasicInfoInput>
@@ -48,7 +49,7 @@ export function BasicInfoStep({ defaultValues, onNext }: BasicInfoStepProps) {
           className="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm text-gray-900 focus:border-rose-400 focus:outline-none focus:ring-1 focus:ring-rose-400"
         >
           <option value="">Select a category</option>
-          {Object.values(VendorCategory).map((cat) => (
+          {CATEGORIES.map((cat) => (
             <option key={cat} value={cat}>
               {CATEGORY_LABELS[cat]}
             </option>

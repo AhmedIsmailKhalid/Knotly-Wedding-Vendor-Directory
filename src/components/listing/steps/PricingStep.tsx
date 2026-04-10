@@ -4,8 +4,9 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { pricingSchema, type PricingInput } from '@/lib/validations/vendor'
 import { PRICE_RANGE_LABELS, PRICE_RANGE_DESCRIPTIONS } from '@/lib/constants/pricing'
-import { PriceRange } from '@prisma/client'
 import { cn } from '@/lib/utils/cn'
+
+const PRICE_RANGES = Object.keys(PRICE_RANGE_LABELS) as Array<keyof typeof PRICE_RANGE_LABELS>
 
 interface PricingStepProps {
   defaultValues?: Partial<PricingInput>
@@ -33,7 +34,7 @@ export function PricingStep({ defaultValues, onNext, onBack }: PricingStepProps)
           Price range
         </label>
         <div className="grid grid-cols-2 gap-3">
-          {Object.values(PriceRange).map((range) => (
+          {PRICE_RANGES.map((range) => (
             <button
               key={range}
               type="button"

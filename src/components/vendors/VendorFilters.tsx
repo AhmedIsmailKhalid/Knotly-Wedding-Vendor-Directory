@@ -2,11 +2,13 @@
 
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useCallback } from 'react'
-import { VendorCategory, PriceRange } from '@prisma/client'
 import { CATEGORY_LABELS } from '@/lib/constants/categories'
 import { PRICE_RANGE_LABELS } from '@/lib/constants/pricing'
 import { LOCATIONS } from '@/lib/constants/locations'
 import { cn } from '@/lib/utils/cn'
+
+const CATEGORIES = Object.keys(CATEGORY_LABELS) as Array<keyof typeof CATEGORY_LABELS>
+const PRICE_RANGES = Object.keys(PRICE_RANGE_LABELS) as Array<keyof typeof PRICE_RANGE_LABELS>
 
 export function VendorFilters() {
   const router = useRouter()
@@ -50,7 +52,7 @@ export function VendorFilters() {
           Category
         </p>
         <div className="space-y-2">
-          {Object.values(VendorCategory).map((cat) => (
+          {CATEGORIES.map((cat) => (
             <button
               key={cat}
               onClick={() => updateFilter(
@@ -91,7 +93,7 @@ export function VendorFilters() {
           Price Range
         </p>
         <div className="space-y-2">
-          {Object.values(PriceRange).map((range) => (
+          {PRICE_RANGES.map((range) => (
             <button
               key={range}
               onClick={() => updateFilter(
