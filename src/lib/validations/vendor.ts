@@ -1,13 +1,29 @@
 import { z } from 'zod'
-import { VendorCategory, PriceRange } from '@prisma/client'
+
+const VendorCategoryEnum = z.enum([
+  'VENUE',
+  'PHOTOGRAPHER',
+  'CATERER',
+  'FLORIST',
+  'DJ_ENTERTAINMENT',
+  'MAKEUP_HAIR',
+  'WEDDING_PLANNER',
+])
+
+const PriceRangeEnum = z.enum([
+  'BUDGET',
+  'MID',
+  'PREMIUM',
+  'LUXURY',
+])
 
 export const basicInfoSchema = z.object({
   businessName: z
     .string()
     .min(2, 'Business name must be at least 2 characters')
     .max(100, 'Business name must be under 100 characters'),
-  category: z.nativeEnum(VendorCategory, {
-    error: 'Please select a category',
+  category: VendorCategoryEnum.refine((val) => val !== undefined, {
+    message: 'Please select a category',
   }),
   location: z
     .string()
@@ -20,8 +36,8 @@ export const basicInfoSchema = z.object({
 })
 
 export const pricingSchema = z.object({
-  priceRange: z.nativeEnum(PriceRange, {
-    error: 'Please select a price range',
+  priceRange: PriceRangeEnum.refine((val) => val !== undefined, {
+    message: 'Please select a price range',
   }),
 })
 

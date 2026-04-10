@@ -1,11 +1,23 @@
 import { z } from 'zod'
-import { VendorCategory, PriceRange } from '@prisma/client'
 
 export const searchSchema = z.object({
   q: z.string().optional(),
-  category: z.nativeEnum(VendorCategory).optional(),
+  category: z.enum([
+    'VENUE',
+    'PHOTOGRAPHER',
+    'CATERER',
+    'FLORIST',
+    'DJ_ENTERTAINMENT',
+    'MAKEUP_HAIR',
+    'WEDDING_PLANNER',
+  ]).optional(),
   location: z.string().optional(),
-  priceRange: z.nativeEnum(PriceRange).optional(),
+  priceRange: z.enum([
+    'BUDGET',
+    'MID',
+    'PREMIUM',
+    'LUXURY',
+  ]).optional(),
   page: z.coerce.number().min(1).default(1),
 })
 

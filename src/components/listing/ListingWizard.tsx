@@ -7,7 +7,6 @@ import { PricingStep } from './steps/PricingStep'
 import { GalleryStep } from './steps/GalleryStep'
 import { ReviewStep } from './steps/ReviewStep'
 import type { BasicInfoInput, PricingInput } from '@/lib/validations/vendor'
-import { VendorCategory, PriceRange } from '@prisma/client'
 import { cn } from '@/lib/utils/cn'
 
 const STEPS = ['Basic Info', 'Pricing', 'Gallery', 'Review']
@@ -75,15 +74,15 @@ export function ListingWizard() {
   }
 
   const reviewData = data.basicInfo && data.pricing && data.photos
-    ? {
-        businessName: data.basicInfo.businessName,
-        category: data.basicInfo.category as VendorCategory,
-        location: data.basicInfo.location,
-        bio: data.basicInfo.bio,
-        priceRange: data.pricing.priceRange as PriceRange,
-        photos: data.photos,
-      }
-    : null
+  ? {
+      businessName: data.basicInfo.businessName,
+      category: data.basicInfo.category,
+      location: data.basicInfo.location,
+      bio: data.basicInfo.bio,
+      priceRange: data.pricing.priceRange,
+      photos: data.photos,
+    }
+  : null
 
   return (
     <div className="w-full max-w-lg mx-auto">

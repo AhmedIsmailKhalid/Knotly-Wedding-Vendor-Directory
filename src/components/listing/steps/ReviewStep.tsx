@@ -3,15 +3,14 @@
 import Image from 'next/image'
 import { CATEGORY_LABELS } from '@/lib/constants/categories'
 import { PRICE_RANGE_LABELS, PRICE_RANGE_DESCRIPTIONS } from '@/lib/constants/pricing'
-import { VendorCategory, PriceRange } from '@prisma/client'
 
 interface ReviewStepProps {
   data: {
     businessName: string
-    category: VendorCategory
+    category: string
     location: string
     bio: string
-    priceRange: PriceRange
+    priceRange: string
     photos: { url: string; publicId: string; isPrimary: boolean }[]
   }
   isSubmitting: boolean
@@ -40,7 +39,7 @@ export function ReviewStep({ data, isSubmitting, onSubmit, onBack }: ReviewStepP
           <div>
             <h3 className="text-lg font-bold text-gray-900">{data.businessName}</h3>
             <div className="flex items-center gap-2 mt-1">
-              <span className="text-sm text-gray-500">{CATEGORY_LABELS[data.category]}</span>
+              <span className="text-sm text-gray-500">{CATEGORY_LABELS[data.category] ?? data.category}</span>
               <span className="text-gray-300">•</span>
               <span className="text-sm text-gray-500">{data.location}</span>
             </div>
@@ -54,9 +53,9 @@ export function ReviewStep({ data, isSubmitting, onSubmit, onBack }: ReviewStepP
           <div>
             <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">Price Range</p>
             <p className="text-sm font-medium text-gray-900">
-              {PRICE_RANGE_LABELS[data.priceRange]}{' '}
+              {PRICE_RANGE_LABELS[data.priceRange] ?? data.priceRange}{' '}
               <span className="font-normal text-gray-500">
-                — {PRICE_RANGE_DESCRIPTIONS[data.priceRange]}
+                — {PRICE_RANGE_DESCRIPTIONS[data.priceRange] ?? ''}
               </span>
             </p>
           </div>
