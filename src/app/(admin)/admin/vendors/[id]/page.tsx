@@ -31,7 +31,7 @@ export default async function AdminVendorReviewPage({ params }: PageProps) {
 
   if (!vendor) notFound()
 
-  const primaryPhoto = vendor.photos.find((p) => p.isPrimary) ?? vendor.photos[0]
+  const primaryPhoto = vendor.photos.find((p: { isPrimary: boolean }) => p.isPrimary) ?? vendor.photos[0]
 
   return (
     <div className="p-8 max-w-4xl">
