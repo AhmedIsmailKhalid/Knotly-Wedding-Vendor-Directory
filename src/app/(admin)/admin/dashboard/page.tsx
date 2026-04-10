@@ -81,7 +81,7 @@ export default async function AdminDashboardPage() {
           </div>
 
           <div className="space-y-3">
-            {recentVendors.map((vendor) => (
+            {recentVendors.map((vendor: typeof recentVendors[number]) => (
               <div
                 key={vendor.id}
                 className="flex items-center justify-between border-b border-gray-50 py-3 last:border-0"
