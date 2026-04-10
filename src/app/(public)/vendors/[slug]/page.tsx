@@ -158,7 +158,7 @@ export default async function VendorProfilePage({ params }: PageProps) {
               <div className="bg-white rounded-2xl border border-gray-100 p-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Gallery</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {vendor.photos.map((photo) => (
+                  {vendor.photos.map((photo: typeof vendor.photos[number]) => (
                     <div
                       key={photo.id}
                       className="relative aspect-square rounded-xl overflow-hidden"
@@ -183,7 +183,7 @@ export default async function VendorProfilePage({ params }: PageProps) {
                 <p className="text-sm text-gray-500">No reviews yet.</p>
               ) : (
                 <div className="space-y-4">
-                  {vendor.reviews.map((review) => (
+                  {vendor.reviews.map((review: typeof vendor.reviews[number]) => (
                     <div
                       key={review.id}
                       className="border-b border-gray-50 pb-4 last:border-0"

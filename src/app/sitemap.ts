@@ -9,7 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     select: { slug: true, updatedAt: true },
   })
 
-  const vendorUrls = vendors.map((vendor) => ({
+  const vendorUrls = vendors.map((vendor: typeof vendors[number]) => ({
     url: `${baseUrl}/vendors/${vendor.slug}`,
     lastModified: vendor.updatedAt,
     changeFrequency: 'weekly' as const,

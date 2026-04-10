@@ -95,7 +95,7 @@ export default async function VendorDashboardPage() {
                   { label: 'Total inquiries', value: vendorProfile._count.inquiries, icon: '💌' },
                   { label: 'Pending', value: pendingCount, icon: '⏳' },
                   { label: 'Reviews', value: vendorProfile._count.reviews, icon: '⭐' },
-                ].map((stat) => (
+                ].map((stat: { label: string; value: number; icon: string }) => (
                   <div
                     key={stat.label}
                     className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5"
@@ -133,7 +133,7 @@ export default async function VendorDashboardPage() {
                   </div>
                 ) : (
                   <div className="space-y-3">
-                    {recentInquiries.map((inquiry) => (
+                    {recentInquiries.map((inquiry: typeof recentInquiries[number]) => (
                       <div
                         key={inquiry.id}
                         className="bg-white rounded-2xl border border-gray-100 p-4 flex items-center gap-4"
@@ -171,7 +171,7 @@ export default async function VendorDashboardPage() {
                     label: 'Public profile',
                     desc: vendorProfile.isApproved ? 'View as couples see it' : 'Pending approval',
                   },
-                ].map((action) => (
+                ].map((action: { href: string; icon: string; label: string; desc: string }) => (
                   <Link
                     key={action.href}
                     href={action.href}

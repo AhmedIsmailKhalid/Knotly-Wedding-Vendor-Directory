@@ -66,7 +66,7 @@ export default async function CoupleDashboardPage() {
             { label: 'Inquiries sent', value: inquiryCount, icon: '💌', href: '/couple/inquiries' },
             { label: 'Saved vendors', value: savedCount, icon: '♥', href: '/couple/saved' },
             { label: 'Accepted', value: acceptedCount, icon: '✅', href: '/couple/inquiries' },
-          ].map((stat) => (
+          ].map((stat: { label: string; value: number; icon: string; href: string }) => (
             <Link
               key={stat.label}
               href={stat.href}
@@ -104,7 +104,7 @@ export default async function CoupleDashboardPage() {
               </div>
             ) : (
               <div className="space-y-3">
-                {recentInquiries.map((inquiry) => (
+                {recentInquiries.map((inquiry: typeof recentInquiries[number]) => (
                   <div
                     key={inquiry.id}
                     className="bg-white rounded-2xl border border-gray-100 p-4 flex items-center gap-4"
@@ -141,7 +141,7 @@ export default async function CoupleDashboardPage() {
                 { href: '/couple/inquiries', icon: '💌', label: 'My inquiries', desc: 'Track your requests' },
                 { href: '/couple/saved', icon: '♥', label: 'Saved vendors', desc: 'Your shortlist' },
                 { href: '/vendors?category=VENUE', icon: '🏛️', label: 'Find a venue', desc: 'Browse all venues' },
-              ].map((action) => (
+              ].map((action: { href: string; icon: string; label: string; desc: string }) => (
                 <Link
                   key={action.href}
                   href={action.href}

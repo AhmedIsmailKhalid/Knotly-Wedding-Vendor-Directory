@@ -93,7 +93,7 @@ export default async function VendorListingPage() {
                   Gallery
                 </p>
                 <div className="grid grid-cols-4 gap-2">
-                  {vendorProfile.photos.map((photo) => (
+                  {vendorProfile.photos.map((photo: typeof vendorProfile.photos[number]) => (
                     <div key={photo.id} className="relative aspect-square rounded-xl overflow-hidden">
                       <Image src={photo.url} alt={vendorProfile.businessName} fill className="object-cover" />
                       {photo.isPrimary && (

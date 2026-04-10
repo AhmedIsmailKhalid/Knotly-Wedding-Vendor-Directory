@@ -49,7 +49,7 @@ export default async function AdminDashboardPage() {
       <h1 className="mb-8 text-2xl font-bold text-gray-900">Dashboard</h1>
 
       <div className="mb-10 grid grid-cols-2 gap-4 lg:grid-cols-5">
-        {stats.map((stat) => (
+        {stats.map((stat: typeof stats[number]) => (
           <div
             key={stat.label}
             className={`rounded-xl border p-5 ${

@@ -80,7 +80,7 @@ export default async function CoupleInquiriesPage() {
                   </span>
                 </div>
                 <div className="space-y-3">
-                  {pending.map((inquiry) => (
+                  {pending.map((inquiry: typeof pending[number]) => (
                     <InquiryCard key={inquiry.id} inquiry={inquiry} />
                   ))}
                 </div>
@@ -98,7 +98,7 @@ export default async function CoupleInquiriesPage() {
                   </span>
                 </div>
                 <div className="space-y-3">
-                  {responded.map((inquiry) => (
+                  {responded.map((inquiry: typeof responded[number]) => (
                     <InquiryCard key={inquiry.id} inquiry={inquiry} />
                   ))}
                 </div>
