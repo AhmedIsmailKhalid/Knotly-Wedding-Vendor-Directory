@@ -32,7 +32,7 @@ export default async function CoupleSavedPage() {
   })
 
   const vendors: VendorCardData[] = await Promise.all(
-    saved.map(async (s) => {
+    saved.map(async (s: typeof saved[number]) => {
       const agg = await prisma.review.aggregate({
         where: { vendorId: s.vendor.id },
         _avg: { rating: true },

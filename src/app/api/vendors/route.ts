@@ -59,7 +59,7 @@ export async function GET(req: NextRequest) {
     ])
 
     const vendorsWithRating = await Promise.all(
-      vendors.map(async (vendor) => {
+      vendors.map(async (vendor: typeof vendors[number]) => {
         const agg = await prisma.review.aggregate({
           where: { vendorId: vendor.id },
           _avg: { rating: true },

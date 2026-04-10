@@ -62,7 +62,7 @@ async function getVendors(rawParams: Record<string, string>) {
   ])
 
   const vendorsWithRating: VendorCardData[] = await Promise.all(
-    vendors.map(async (vendor) => {
+    vendors.map(async (vendor: typeof vendors[number]) => {
       const agg = await prisma.review.aggregate({
         where: { vendorId: vendor.id },
         _avg: { rating: true },
