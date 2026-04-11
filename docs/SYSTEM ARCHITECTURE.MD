@@ -8,36 +8,8 @@ Knotly is a full-stack Next.js 14 application using the App Router architecture.
 
 ## High-Level Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                         VERCEL EDGE                             │
-│  ┌──────────────────┐                                           │
-│  │    Middleware     │ ← Route protection (JWT role check)      │
-│  └────────┬─────────┘                                           │
-│           │                                                     │
-│  ┌────────▼─────────────────────────────────────────────────┐  │
-│  │              Next.js 14 App Router                        │  │
-│  │                                                           │  │
-│  │  ┌─────────────┐  ┌──────────────┐  ┌─────────────────┐ │  │
-│  │  │   (public)  │  │  (couple)    │  │    (vendor)     │ │  │
-│  │  │  /vendors   │  │  /dashboard  │  │  /dashboard     │ │  │
-│  │  │  /search    │  │  /saved      │  │  /listing       │ │  │
-│  │  │  /categories│  │  /inquiries  │  │  /inquiries     │ │  │
-│  │  └─────────────┘  └──────────────┘  └─────────────────┘ │  │
-│  │                                                           │  │
-│  │  ┌─────────────────────────────────────────────────────┐ │  │
-│  │  │                  /api (Route Handlers)              │ │  │
-│  │  │  /auth  /vendors  /reviews  /saved  /inquiries      │ │  │
-│  │  └─────────────────────────────────────────────────────┘ │  │
-│  └───────────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────┘
-           │                    │                    │
-           ▼                    ▼                    ▼
-   ┌───────────────┐   ┌────────────────┐   ┌──────────────┐
-   │  Neon Postgres │   │  NextAuth JWT  │   │  Cloudinary  │
-   │  via Prisma    │   │  Session Store │   │  Image CDN   │
-   └───────────────┘   └────────────────┘   └──────────────┘
-```
+![Architectural Diagram](../assets/Architectural-Diagram.png)
+
 
 ---
 

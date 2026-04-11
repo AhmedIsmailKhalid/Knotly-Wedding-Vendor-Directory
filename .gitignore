@@ -44,3 +44,6 @@ next-env.d.ts
 # Version History
 Versions/
 Version History.MD
+
+# assets
+*.drawio
